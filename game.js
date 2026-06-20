@@ -488,6 +488,10 @@ function handleDuel(player) {
 
 function chooseDuelOpponent(player) {
   const opponents = state.players.filter((other) => other.id !== player.id);
+  choose("Duel Space", `${player.name} landed on a Duel Space. Choose an opponent to duel.`, opponents.map((opponent) => ({
+    label: opponent.name,
+    action: () => startDuel(player, opponent)
+  })));
   showDuelPanel("Choose Duel Opponent", `${player.name}, choose who you want to duel.`, opponents.map((opponent) => ({
     label: opponent.name,
     action: () => startDuel(player, opponent)
@@ -770,6 +774,8 @@ function showDuelPanel(title, text, actions) {
     els.duelActions.appendChild(button);
   });
   els.duelPanel.classList.remove("hidden");
+  showToast(`Duel action: ${title}`);
+  els.duelPanel.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 function hideDuelPanel() {
